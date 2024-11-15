@@ -64,9 +64,9 @@ class ViewController: UIViewController {
         buttonDiv.setTitle("/", for: .normal)
         
         //hStackView2 버튼
-        button1.setTitle("4", for: .normal)
-        button2.setTitle("5", for: .normal)
-        button3.setTitle("6", for: .normal)
+        button1.setTitle("1", for: .normal)
+        button2.setTitle("2", for: .normal)
+        button3.setTitle("3", for: .normal)
         buttonMul.setTitle("*", for: .normal)
         
         //hStackView3 버튼
@@ -94,19 +94,19 @@ class ViewController: UIViewController {
         
         //버튼 스택뷰에 추가
         [button7, button8, button9, buttonAdd].forEach {
-            self.hStackView1.addArrangedSubview($0)
+            self.hStackView4.addArrangedSubview($0)
         }
         
         [button4, button5, button6, buttonSub].forEach {
-            self.hStackView2.addArrangedSubview($0)
-        }
-        
-        [button1, button2, button3, buttonMul].forEach {
             self.hStackView3.addArrangedSubview($0)
         }
         
+        [button1, button2, button3, buttonMul].forEach {
+            self.hStackView2.addArrangedSubview($0)
+        }
+        
         [buttonAc, button0, buttonEqual, buttonDiv].forEach {
-            self.hStackView4.addArrangedSubview($0)
+            self.hStackView1.addArrangedSubview($0)
         }
         
         
