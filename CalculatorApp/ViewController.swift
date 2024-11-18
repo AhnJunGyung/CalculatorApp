@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         view.backgroundColor = .black
         
         //라벨 속성
-        label.text = "12345"
+        label.text = "0"
         label.textColor = .white
         label.textAlignment = .right
         label.font = .boldSystemFont(ofSize: 60)
@@ -85,6 +85,7 @@ class ViewController: UIViewController {
         //버튼 속성
         [button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonAdd, buttonSub, buttonMul, buttonEqual, buttonAc, buttonDiv]
             .forEach {
+                //버튼 컬러 지정
                 if let text = $0.titleLabel?.text {
                     if let _ = Int(text) {
                         $0.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
@@ -97,6 +98,7 @@ class ViewController: UIViewController {
                 $0.frame.size.height = 80
                 $0.frame.size.width = 80
                 $0.layer.cornerRadius = 40
+                $0.addTarget(self, action: #selector(buttonTapped), for: .touchDown)
             }
         
         //버튼 스택뷰에 추가
@@ -161,9 +163,33 @@ class ViewController: UIViewController {
         
     }
     
-    func makeButton(titleValue: String, action: Selector, backgroundColor: UIColor) {
+    @objc
+    private func buttonTapped(_ sender: UIButton) {//탭한 버튼에 따라 처리
+        if let buttonLabel = sender.titleLabel?.text {
+            switch buttonLabel {
+            case "AC": label.text = "0"
+            case "=": changeLabelText(buttonLabel)
+            case "*": changeLabelText(buttonLabel)
+            case "+": changeLabelText(buttonLabel)
+            case "-": changeLabelText(buttonLabel)
+            case "/": changeLabelText(buttonLabel)
+            default: changeLabelText(buttonLabel)
+            }
+        }
         
     }
+    
+    private func changeLabelText(_ getString: String) {
+        
+        if let labelText = label.text {
+            if Array(labelText)[0] == "0" {//label의 첫번째 값이 0일 경우 입력값으로 덮어쓰기
+                label.text = getString
+            } else {//label의 첫번째 값이 0이 아닐 경우 입력값 추가
+                label.text?.append(getString)
+            }
+        }
+    }
+    
     
 }
 
