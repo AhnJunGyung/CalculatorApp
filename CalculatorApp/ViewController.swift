@@ -85,8 +85,15 @@ class ViewController: UIViewController {
         //버튼 속성
         [button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonAdd, buttonSub, buttonMul, buttonEqual, buttonAc, buttonDiv]
             .forEach {
+                if let text = $0.titleLabel?.text {
+                    if let _ = Int(text) {
+                        $0.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+                    } else {
+                        $0.backgroundColor = .orange
+                    }
+                }
+                
                 $0.titleLabel?.font = .boldSystemFont(ofSize: 30)
-                $0.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
                 $0.frame.size.height = 80
                 $0.frame.size.width = 80
                 //$0.layer.cornerRadius = 40
@@ -151,6 +158,10 @@ class ViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(350)
         }
+        
+    }
+    
+    func makeButton(titleValue: String, action: Selector, backgroundColor: UIColor) {
         
     }
     
