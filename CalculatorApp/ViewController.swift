@@ -167,7 +167,7 @@ class ViewController: UIViewController {
     private func buttonTapped(_ sender: UIButton) {//탭한 버튼에 따라 처리
         if let buttonLabel = sender.titleLabel?.text {
             switch buttonLabel {
-            case "AC": label.text = "0"
+            case "AC": label.text = "0" //0으로 초기화
             case "=": changeLabelText(buttonLabel)
             case "*": changeLabelText(buttonLabel)
             case "+": changeLabelText(buttonLabel)
