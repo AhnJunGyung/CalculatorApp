@@ -96,7 +96,7 @@ class ViewController: UIViewController {
                 $0.titleLabel?.font = .boldSystemFont(ofSize: 30)
                 $0.frame.size.height = 80
                 $0.frame.size.width = 80
-                //$0.layer.cornerRadius = 40
+                $0.layer.cornerRadius = 40
             }
         
         //버튼 스택뷰에 추가
