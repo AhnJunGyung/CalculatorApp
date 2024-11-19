@@ -11,7 +11,7 @@
 7. [Language](#Language)
 8. [Trouble Shooting](#trouble-shooting)
     
-## 👨‍🏫 프로젝트 소개
+## 프로젝트 소개
 이전에 Playground에서 로직만 구현했던 계산기를 UIKit을 사용해 앱으로 구현하고자 했습니다. 해당 과제에서는 정수형 계산만을 다루는 약식 계산기로 구현하였습니다.
 
 ## 프로젝트 계기
@@ -24,14 +24,14 @@
 
 - 계산 결과 출력 : `=`버튼을 탭하면 정수형 계산 결과를 출력합니다.
 
-## ⏲️ 개발기간
+## 개발기간
 - 2024.11.14(목) ~ 2024.11.19(화)
 
-## 📚️ 기술스택
+## 기술스택
 <img src="https://img.shields.io/badge/Xcode-147EFB?style=flat-square&logo=Xcode&logoColor=white"/>
 
 
-### ✔️ Language 
+## Language 
 <img src="https://img.shields.io/badge/Swift-F05138?style=flat-square&logo=Swift&logoColor=white"/>
 
 ## Trouble Shooting
