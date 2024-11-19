@@ -165,31 +165,92 @@ class ViewController: UIViewController {
     
     @objc
     private func buttonTapped(_ sender: UIButton) {//탭한 버튼에 따라 처리
+        
         if let buttonLabel = sender.titleLabel?.text {
+            
             switch buttonLabel {
             case "AC": label.text = "0" //0으로 초기화
-            case "=": changeLabelText(buttonLabel)
-            case "*": changeLabelText(buttonLabel)
-            case "+": changeLabelText(buttonLabel)
-            case "-": changeLabelText(buttonLabel)
-            case "/": changeLabelText(buttonLabel)
-            default: changeLabelText(buttonLabel)
+                
+            case "=": if let labelText = label.text {
+                let labelArray = Array(labelText)
+                
+                //수식의 마지막 값이 연산기호가 아닌 경우
+                if !mathematicalExpressionCheck(labelArray[labelArray.endIndex - 1]) {
+                    if let result = calculate(expression: labelText) {//연산 수행
+                        label.text = String(result)
+                    }
+                }
             }
+                
+            case "*": inputMathematicalExpression(buttonLabel)
+            case "+": inputMathematicalExpression(buttonLabel)
+            case "-": inputMathematicalExpression(buttonLabel)
+            case "/": inputMathematicalExpression(buttonLabel)
+            default: inputNumber(buttonLabel)
+            }
+            
         }
         
     }
     
-    private func changeLabelText(_ getString: String) {
+    private func inputNumber(_ getString: String) {
         
         if let labelText = label.text {
-            if Array(labelText)[0] == "0" {//label의 첫번째 값이 0일 경우 입력값으로 덮어쓰기
+            let labelArray = Array(labelText)
+            
+            if labelArray[0] == "0" && labelArray.count == 1 {//초기값이 0일 경우 입력 숫자로 덮어쓰기
                 label.text = getString
-            } else {//label의 첫번째 값이 0이 아닐 경우 입력값 추가
+            } else if labelArray[labelArray.endIndex - 1] != "0"{//일반적인 입력값 추가
                 label.text?.append(getString)
+            } else {
+                //수식의 마지막이 0일 경우 getString으로 대체
+                var characterArray = Array(labelArray)
+                characterArray[characterArray.endIndex - 1] = Character(getString)
+                label.text = String(characterArray)
             }
+        }
+        
+    }
+    
+    //연산기호 입력 함수
+    private func inputMathematicalExpression(_ getString: String) {
+        
+        if let labelText = label.text {
+            
+            let labelArray = Array(labelText)
+            let arrayLast = labelArray[labelArray.endIndex - 1]
+
+            //수식의 마지막이 연산기호가 아닌 경우, 연산기호 append
+            if arrayLast != "*" && arrayLast != "+" && arrayLast != "/" && arrayLast != "-" {
+                label.text?.append(getString)
+            } else {
+                //수식의 마지막이 연산기호인 경우 입력된 연산기호로 대체
+                var characterArray = Array(labelArray)
+                characterArray[characterArray.endIndex - 1] = Character(getString)
+                label.text = String(characterArray)
+            }
+            
         }
     }
     
+    private func calculate(expression: String) -> Int? {
+        
+        let expression = NSExpression(format: expression)
+        
+        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
+            return result
+        } else {
+            return nil
+        }
+        
+    }
+    
+    //연산기호 체크 함수. 연산기호인 경우 true
+    private func mathematicalExpressionCheck(_ getCharacter: Character) -> Bool{
+        
+        return getCharacter == "*" || getCharacter == "/" || getCharacter == "+" || getCharacter == "-"
+        
+    }
     
 }
 
