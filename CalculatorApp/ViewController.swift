@@ -11,33 +11,7 @@ import SnapKit
 class ViewController: UIViewController {
     
     let label = UILabel()
-    
-    let buttonAc = UIButton()
-    let button0 = UIButton()
-    let buttonEqual = UIButton()
-    let buttonDiv = UIButton() //Divide 나누기
-    
-    let button1 = UIButton()
-    let button2 = UIButton()
-    let button3 = UIButton()
-    let buttonMul = UIButton() //Multiple 곱하기
-    
-    let button4 = UIButton()
-    let button5 = UIButton()
-    let button6 = UIButton()
-    let buttonSub = UIButton() //Subtraction 빼기
-    
-    let button7 = UIButton()
-    let button8 = UIButton()
-    let button9 = UIButton()
-    let buttonAdd = UIButton() //Addition 더하기
-    
-    //horizontalStackView
-    let hStackView1 = UIStackView()
-    let hStackView2 = UIStackView()
-    let hStackView3 = UIStackView()
-    let hStackView4 = UIStackView()
-    
+
     //verticalStackView
     let vStackView = UIStackView()
     
@@ -56,77 +30,40 @@ class ViewController: UIViewController {
         label.textAlignment = .right
         label.font = .boldSystemFont(ofSize: 60)
         
-        //버튼속성
+        //버튼별 색상 지정
+        let numberButtonColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+        let mathematicalSymbolButtonColor = UIColor(.orange)
+        
         //hStackView1 버튼
-        buttonAc.setTitle("AC", for: .normal)
-        button0.setTitle("0", for: .normal)
-        buttonEqual.setTitle("=", for: .normal)
-        buttonDiv.setTitle("/", for: .normal)
+        let buttonAc = makeButton(titleValue: "AC", action: #selector(buttonTapped), backgroundColor: mathematicalSymbolButtonColor)
+        let button0 = makeButton(titleValue: "0", action: #selector(buttonTapped), backgroundColor: numberButtonColor)
+        let buttonEqual = makeButton(titleValue: "=", action: #selector(buttonTapped), backgroundColor: mathematicalSymbolButtonColor)
+        let buttonDiv = makeButton(titleValue: "/", action: #selector(buttonTapped), backgroundColor: mathematicalSymbolButtonColor)
         
         //hStackView2 버튼
-        button1.setTitle("1", for: .normal)
-        button2.setTitle("2", for: .normal)
-        button3.setTitle("3", for: .normal)
-        buttonMul.setTitle("*", for: .normal)
+        let button1 = makeButton(titleValue: "1", action: #selector(buttonTapped), backgroundColor: numberButtonColor)
+        let button2 = makeButton(titleValue: "2", action: #selector(buttonTapped), backgroundColor: numberButtonColor)
+        let button3 = makeButton(titleValue: "3", action: #selector(buttonTapped), backgroundColor: numberButtonColor)
+        let buttonMul = makeButton(titleValue: "*", action: #selector(buttonTapped), backgroundColor: mathematicalSymbolButtonColor)
         
         //hStackView3 버튼
-        button4.setTitle("4", for: .normal)
-        button5.setTitle("5", for: .normal)
-        button6.setTitle("6", for: .normal)
-        buttonSub.setTitle("-", for: .normal)
+        let button4 = makeButton(titleValue: "4", action: #selector(buttonTapped), backgroundColor: numberButtonColor)
+        let button5 = makeButton(titleValue: "5", action: #selector(buttonTapped), backgroundColor: numberButtonColor)
+        let button6 = makeButton(titleValue: "6", action: #selector(buttonTapped), backgroundColor: numberButtonColor)
+        let buttonSub = makeButton(titleValue: "-", action: #selector(buttonTapped), backgroundColor: mathematicalSymbolButtonColor)
         
         //hStackView4 버튼
-        button7.setTitle("7", for: .normal)
-        button8.setTitle("8", for: .normal)
-        button9.setTitle("9", for: .normal)
-        buttonAdd.setTitle("+", for: .normal)
+        let button7 = makeButton(titleValue: "7", action: #selector(buttonTapped), backgroundColor: numberButtonColor)
+        let button8 = makeButton(titleValue: "8", action: #selector(buttonTapped), backgroundColor: numberButtonColor)
+        let button9 = makeButton(titleValue: "9", action: #selector(buttonTapped), backgroundColor: numberButtonColor)
+        let buttonAdd = makeButton(titleValue: "+", action: #selector(buttonTapped), backgroundColor: mathematicalSymbolButtonColor)
         
         
-        //버튼 속성
-        [button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonAdd, buttonSub, buttonMul, buttonEqual, buttonAc, buttonDiv]
-            .forEach {
-                //버튼 컬러 지정
-                if let text = $0.titleLabel?.text {
-                    if let _ = Int(text) {
-                        $0.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
-                    } else {
-                        $0.backgroundColor = .orange
-                    }
-                }
-                
-                $0.titleLabel?.font = .boldSystemFont(ofSize: 30)
-                $0.frame.size.height = 80
-                $0.frame.size.width = 80
-                $0.layer.cornerRadius = 40
-                $0.addTarget(self, action: #selector(buttonTapped), for: .touchDown)
-            }
-        
-        //버튼 스택뷰에 추가
-        [button7, button8, button9, buttonAdd].forEach {
-            self.hStackView4.addArrangedSubview($0)
-        }
-        
-        [button4, button5, button6, buttonSub].forEach {
-            self.hStackView3.addArrangedSubview($0)
-        }
-        
-        [button1, button2, button3, buttonMul].forEach {
-            self.hStackView2.addArrangedSubview($0)
-        }
-        
-        [buttonAc, button0, buttonEqual, buttonDiv].forEach {
-            self.hStackView1.addArrangedSubview($0)
-        }
-        
-        
-        //stackView 속성
-        [hStackView1, hStackView2, hStackView3, hStackView4]
-            .forEach{
-                $0.axis = .horizontal
-                $0.spacing = 10
-                $0.backgroundColor = .black
-                $0.distribution = .fillEqually
-            }
+        //horizontalStackView
+        let hStackView1 = makeHorizontalStackView([buttonAc, button0, buttonEqual, buttonDiv])
+        let hStackView2 = makeHorizontalStackView([button1, button2, button3, buttonMul])
+        let hStackView3 = makeHorizontalStackView([button4, button5, button6, buttonSub])
+        let hStackView4 = makeHorizontalStackView([button7, button8, button9, buttonAdd])
         
         vStackView.axis = .vertical
         vStackView.backgroundColor = .black
@@ -142,18 +79,19 @@ class ViewController: UIViewController {
         
         view.addSubview(vStackView) //뷰컨트롤러에 vertical스택뷰 추가
         
-        
-        //제약조건
+        //라벨 제약조건
         label.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.top.equalToSuperview().offset(200)
             $0.height.equalTo(100)
         }
         
+        //hotizontal 스택 제약조건
         [hStackView4, hStackView3, hStackView2, hStackView1].forEach{
             $0.snp.makeConstraints{$0.height.equalTo(80)}
         }
         
+        //vertical 스택 제약조건
         vStackView.snp.makeConstraints{
             $0.width.equalTo(350)
             $0.top.equalTo(label.snp.bottom).offset(60)
@@ -163,8 +101,12 @@ class ViewController: UIViewController {
         
     }
     
+    /*
+     @objc: swift에서 작성된 메소드를 Objective-C에서 호출될 수 있도록 하는 역할(Swift 메서드가 Objective-C 런타임에서 호출 가능한 메서드로 인식)
+     Objective-C는 selector를 통해 메소드를 호출(selector는 #selector() 메소드를 통해 인스턴스를 생성)
+     */
     @objc
-    private func buttonTapped(_ sender: UIButton) {//탭한 버튼에 따라 처리
+    private func buttonTapped(_ sender: UIButton) {//버튼을 탭 했을때의 기능 처리
         
         if let buttonLabel = sender.titleLabel?.text {
             
@@ -175,17 +117,17 @@ class ViewController: UIViewController {
                 let labelArray = Array(labelText)
                 
                 //수식의 마지막 값이 연산기호가 아닌 경우
-                if !mathematicalExpressionCheck(labelArray[labelArray.endIndex - 1]) {
+                if !mathematicalSymbolCheck(labelArray[labelArray.endIndex - 1]) {
                     if let result = calculate(expression: labelText) {//연산 수행
                         label.text = String(result)
                     }
                 }
             }
                 
-            case "*": inputMathematicalExpression(buttonLabel)
-            case "+": inputMathematicalExpression(buttonLabel)
-            case "-": inputMathematicalExpression(buttonLabel)
-            case "/": inputMathematicalExpression(buttonLabel)
+            case "*": inputMathematicalSymbol(buttonLabel)
+            case "+": inputMathematicalSymbol(buttonLabel)
+            case "-": inputMathematicalSymbol(buttonLabel)
+            case "/": inputMathematicalSymbol(buttonLabel)
             default: inputNumber(buttonLabel)
             }
             
@@ -193,6 +135,7 @@ class ViewController: UIViewController {
         
     }
     
+    //탭한 버튼값 입력 처리
     private func inputNumber(_ getString: String) {
         
         if let labelText = label.text {
@@ -212,8 +155,8 @@ class ViewController: UIViewController {
         
     }
     
-    //연산기호 입력 함수
-    private func inputMathematicalExpression(_ getString: String) {
+    //연산기호 입력
+    private func inputMathematicalSymbol(_ getString: String) {
         
         if let labelText = label.text {
             
@@ -233,6 +176,7 @@ class ViewController: UIViewController {
         }
     }
     
+    //연산 수행
     private func calculate(expression: String) -> Int? {
         
         let expression = NSExpression(format: expression)
@@ -246,10 +190,41 @@ class ViewController: UIViewController {
     }
     
     //연산기호 체크 함수. 연산기호인 경우 true
-    private func mathematicalExpressionCheck(_ getCharacter: Character) -> Bool{
+    private func mathematicalSymbolCheck(_ getCharacter: Character) -> Bool{
         
         return getCharacter == "*" || getCharacter == "/" || getCharacter == "+" || getCharacter == "-"
         
+    }
+    
+    //버튼 생성
+    private func makeButton(titleValue: String, action: Selector, backgroundColor: UIColor) -> UIButton {
+        let button = UIButton()
+                
+        button.setTitle(titleValue, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 30)
+        button.frame.size.height = 80
+        button.frame.size.width = 80
+        button.layer.cornerRadius = 40
+        button.addTarget(self, action: action, for: .touchDown)
+        button.backgroundColor = backgroundColor
+        
+        return button
+    }
+    
+    //horizontalStack생성
+    func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
+        let horizontalStackView = UIStackView()
+        
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.spacing = 10
+        horizontalStackView.backgroundColor = .black
+        horizontalStackView.distribution = .fillEqually
+        
+        for i in 0..<views.count {
+            horizontalStackView.addArrangedSubview(views[i])
+        }
+        
+        return horizontalStackView
     }
     
 }
