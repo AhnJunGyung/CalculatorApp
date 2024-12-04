@@ -122,11 +122,12 @@ class ViewController: UIViewController {
                     
                     if let result = calculate(expression: labelText) {//연산 수행
                         label.text = String(result)
+                    } else {
+                        label.text = "Error"
                     }
                 }
-            } else {
-                label.text = "Error"
             }
+                
             case "*": inputMathematicalSymbol("×")
             case "+": inputMathematicalSymbol(buttonLabel)
             case "-": inputMathematicalSymbol(buttonLabel)
@@ -134,8 +135,6 @@ class ViewController: UIViewController {
             default: inputNumber(buttonLabel)
             }
             
-        } else {
-            label.text = "Error"
         }
         
     }
@@ -156,8 +155,6 @@ class ViewController: UIViewController {
                 characterArray[characterArray.endIndex - 1] = Character(getString)
                 label.text = String(characterArray)
             }
-        } else {
-            label.text = "Error"
         }
         
     }
@@ -182,8 +179,6 @@ class ViewController: UIViewController {
                 label.text = String(characterArray)
             }
             
-        } else {
-            label.text = "Error"
         }
     }
     
