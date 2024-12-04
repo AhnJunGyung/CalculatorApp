@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Foundation
 
 class ViewController: UIViewController {
     
@@ -118,19 +119,23 @@ class ViewController: UIViewController {
                 
                 //수식의 마지막 값이 연산기호가 아닌 경우
                 if !mathematicalSymbolCheck(labelArray[labelArray.endIndex - 1]) {
+                    
                     if let result = calculate(expression: labelText) {//연산 수행
                         label.text = String(result)
                     }
                 }
+            } else {
+                label.text = "Error"
             }
-                
-            case "*": inputMathematicalSymbol(buttonLabel)
+            case "*": inputMathematicalSymbol("×")
             case "+": inputMathematicalSymbol(buttonLabel)
             case "-": inputMathematicalSymbol(buttonLabel)
-            case "/": inputMathematicalSymbol(buttonLabel)
+            case "/": inputMathematicalSymbol("÷")
             default: inputNumber(buttonLabel)
             }
             
+        } else {
+            label.text = "Error"
         }
         
     }
@@ -151,6 +156,8 @@ class ViewController: UIViewController {
                 characterArray[characterArray.endIndex - 1] = Character(getString)
                 label.text = String(characterArray)
             }
+        } else {
+            label.text = "Error"
         }
         
     }
@@ -164,23 +171,30 @@ class ViewController: UIViewController {
             let arrayLast = labelArray[labelArray.endIndex - 1]
 
             //수식의 마지막이 연산기호가 아닌 경우, 연산기호 append
-            if arrayLast != "*" && arrayLast != "+" && arrayLast != "/" && arrayLast != "-" {
+            if arrayLast != "×" && arrayLast != "+" && arrayLast != "÷" && arrayLast != "-" {
+
                 label.text?.append(getString)
             } else {
                 //수식의 마지막이 연산기호인 경우 입력된 연산기호로 대체
                 var characterArray = Array(labelArray)
+                
                 characterArray[characterArray.endIndex - 1] = Character(getString)
                 label.text = String(characterArray)
             }
             
+        } else {
+            label.text = "Error"
         }
     }
     
     //연산 수행
     private func calculate(expression: String) -> Int? {
-        
-        let expression = NSExpression(format: expression)
-        
+        // "×", "÷" 기호를 계산기호 "*", "/"로 변경
+        var replaceExpression = expression.replacingOccurrences(of: "×", with: "*")
+        replaceExpression = replaceExpression.replacingOccurrences(of: "÷", with: "/")
+
+        let expression = NSExpression(format: replaceExpression)
+
         if let result = expression.expressionValue(with: nil, context: nil) as? Int {
             return result
         } else {
@@ -210,6 +224,8 @@ class ViewController: UIViewController {
         
         return button
     }
+
+    
     
     //horizontalStack생성
     func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
